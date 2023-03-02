@@ -1,0 +1,56 @@
+<section class="vh-100" style="background-color: #C1CFEA;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100" style="color: #282828;">
+      <div class="col-md-12 col-lg-12 col-xl-12">
+        <div class="card mb-4 gradient-custom" style="border-radius: 25px;">
+          <div class="card-body p-4">
+            <div id="demo1" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <div class="d-flex justify-content-between pb-2">
+                    <div>
+                        <div>
+                            <ngx-skeleton-loader *ngIf="!weatherDetails" appearance="circle" [theme]="circleTheme"></ngx-skeleton-loader>
+                            <h2 class="display-2" *ngIf="weatherDetails"><strong>{{forecastToday && (forecastToday?.day?.avgtemp_c | number:'1.0-0')}}°C</strong></h2>
+                        </div>
+                        <div>
+                            <ngx-skeleton-loader *ngIf="!weatherDetails" count="2" [theme]="lineTheme"></ngx-skeleton-loader>
+                            <p class="text-muted mb-0" *ngIf="weatherDetails">Humidity:{{forecastToday?.day?.avghumidity}}°C | Chance of Rain: {{forecastToday?.day?.daily_chance_of_rain}}%</p>
+                            <p class="text-muted mb-0" *ngIf="weatherDetails">{{weatherDetails?.location?.name}}, {{weatherDetails?.location?.country}}</p>
+                        </div>
+                    </div>
+                    <div>
+                    <ngx-skeleton-loader *ngIf="!weatherDetails" appearance="circle" [theme]="circleTheme"></ngx-skeleton-loader>
+                      <img *ngIf="weatherDetails" [src]="forecastToday && forecastToday?.day?.condition?.icon"
+                        width="150px">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-4" style="border-radius: 25px;">
+          <div class="card-body p-4">
+            <div id="demo2" class="carousel slide" data-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <ngx-skeleton-loader *ngIf="!weatherDetails" count="3"></ngx-skeleton-loader>
+                    <div class="d-flex justify-content-around text-center pt-2">
+                    <div class="flex-column" *ngFor="let time of weatherDetails?.forecast?.forecastday[0]?.hour">
+                        <p class="small"><strong>{{time?.temp_c | number:'1.0-0'}}°C</strong></p>
+                        <img *ngIf="weatherDetails" [src]="time?.condition?.icon" width="50px">
+                        <p class="mb-0"><strong>{{time?.time | date:'hh:mm'}}</strong></p>
+                        <p class="mb-0 text-muted" style="font-size: .65rem;">{{time?.time | date:'a'}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
